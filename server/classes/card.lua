@@ -1,4 +1,4 @@
-Card = {}
+local Card = {}
 Card.__index = Card
 
 ---@class Card
@@ -24,6 +24,10 @@ function Card:new(data)
     setmetatable(cardInstance, self)
 
     return cardInstance
+end
+
+function Card:addElement(element)
+    table.insert(self.cardData.body, element)
 end
 
 function Card:toJson()
