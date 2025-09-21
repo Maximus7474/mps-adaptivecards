@@ -55,6 +55,47 @@ function CardElement.Image(data)
     }
 end
 
+---@class MediaSource
+---@field mimeType 'video/mp4' | 'video/webm' | 'audio/mpeg' | 'audio/mp3'
+---@field url string
+
+---@class MediaOptions
+---@field poster string
+---@field sources table<integer, MediaSource> | MediaSource
+---@field altText? string
+
+---Add media elements
+---@param data MediaOptions
+function CardElement.Media(data)
+
+    if type(data.poster) ~= 'string' then
+        error(('Invalid "poster" value (found %s instead of string) passed in Media'):format(type(data.poster)), 2)
+    end
+
+    if type(data.sources) ~= "table" then
+        error(('Invalid "sources" value (found %s instead of table) passed in Media'):format(type(data.sources)), 2)
+    end
+
+    local sources = {}
+    if type(data.sources.url) == 'string' then
+        table.insert(sources, data.sources)
+    elseif #data.sources > 0 then
+        sources = data.sources
+    end
+
+    if #sources == 0 then
+        error(('Invalid "sources" value (requires a non empty table) passed in Media'):format(type(data.sources)), 2)
+    end
+
+    return {
+        type = 'Media',
+        poster = data.poster,
+        sources = sources,
+
+        altText = data.altText or nil,
+    }
+end
+
 ---@class CardElement
 ---@field TextBlock fun(data: TextBlockOptions): table create a text block
 ---@field Image fun(data: ImageOptions): table create an image
