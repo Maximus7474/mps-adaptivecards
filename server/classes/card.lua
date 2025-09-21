@@ -26,8 +26,19 @@ function Card:new(data)
     return cardInstance
 end
 
-function Card:addElement(element)
-    table.insert(self.cardData.body, element)
+---Add elements to the adapative card
+---@param ... CardElement a tuple of elements
+function Card:addElement(...)
+    local elements = { ... }
+    for i = 1, #elements, 1 do
+        local element = elements[i]
+
+        if type(element.type) ~= 'string' then
+            warn('An invalid object was passed to CardContainer constructor', json.encode(element))
+        else
+            table.insert(self.cardData.body, element)
+        end
+    end
 end
 
 ---convert card to json string
