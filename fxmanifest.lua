@@ -5,7 +5,7 @@ lua54 'yes'
 title 'Adaptive Cards builder'
 description 'A simple demo resource in using adaptive cards'
 author 'Maximus7474'
-version 'v0.3.0'
+version 'v1.0.0'
 
 server_only 'yes'
 
