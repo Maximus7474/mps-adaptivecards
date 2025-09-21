@@ -30,8 +30,11 @@ function Card:addElement(element)
     table.insert(self.cardData.body, element)
 end
 
-function Card:toJson()
-    return json.encode(self.cardData)
+---convert card to json string
+---@param debug? boolean
+---@return string
+function Card:toJson(debug)
+    return json.encode(self.cardData, debug and { indent = true, sort_keys = true } or nil)
 end
 
 return Card
