@@ -1,6 +1,6 @@
-local Card = require 'server.classes.card'
-local CardElement = require 'server.classes.cardElement'
-local CardContainer = require 'server.classes.cardContainer'
+local Card = require 'server.lib.card'
+local CardElement = require 'server.lib.cardElement'
+local CardContainer = require 'server.lib.cardContainer'
 
 ---@param name string
 ---@param setKickReason fun(reason: string) used to set a reason message for when the event is canceled
