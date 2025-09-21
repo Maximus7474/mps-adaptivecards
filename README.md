@@ -32,4 +32,4 @@ A Lua module for FiveM that simplifies the creation and management of **Adaptive
 ## 📝 Example
 
 This is a demo resource, therefor you can simply install it on your server and start messing around with the `server/index.lua` file to discover the system.
-If you want to use this within another resource, extract the `lib/` folder and place it into your resource. Please note that this **does require ox_lib** which "fixes" the lua require feature within fxserver, it can be altered to not use it but that is solel on you to do and work it out (because it's not hard, figure it out).
+If you want to use this within another resource, extract the `lib/` folder and place it into your resource. Please note that this **does require ox_lib** which "fixes" the lua require feature within fxserver, it can be altered to not use it but that is solely on you to do and work it out (because it's not hard, figure it out).
