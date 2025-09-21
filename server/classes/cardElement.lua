@@ -29,7 +29,34 @@ function CardElement.TextBlock(data)
     }
 end
 
+---@class ImageOptions
+---@field url string
+---@field altText? string
+---@field style? 'default' | 'person'
+---@field size? 'auto' | 'stretch' | 'small' | 'medium' | 'large'
+---@field alignment? 'Left' | 'Center' | 'Right'
+
+--- Create an image block
+---@param data ImageOptions
+function CardElement.Image(data)
+
+    if type(data.url) ~= "string" then
+        error(('Invalid "url" value (found %s instead of string) passed in Image'):format(type(data.url)), 2)
+    end
+
+    return {
+        type = "Image",
+        url = data.url,
+
+        altText = data.altText or nil,
+        style = data.style or nil,
+        size = data.size or nil,
+        horizontalAlignment = data.alignment or nil,
+    }
+end
+
 ---@class CardElement
 ---@field TextBlock fun(data: TextBlockOptions): table create a text block
+---@field Image fun(data: ImageOptions): table create an image
 
 return CardElement
