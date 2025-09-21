@@ -99,5 +99,6 @@ end
 ---@class CardElement
 ---@field TextBlock fun(data: TextBlockOptions): table create a text block
 ---@field Image fun(data: ImageOptions): table create an image
+---@field Media fun(data: MediaOptions): table create a media element
 
 return CardElement
