@@ -17,6 +17,18 @@ local function playerConnectingHandler(name, setKickReason, deferrals)
                 text = ('Hello, %s (%d)!'):format(name, tonumber(src)),
                 style = 'heading',
             }),
+            CardElement.Image({
+                url = 'https://placehold.co/400',
+                alignment = 'Center',
+                size = 'medium',
+            }),
+            CardElement.Media({
+                poster = 'https://placehold.co/69',
+                sources = {
+                    url = 'https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+                    mimeType = 'video/mp4'
+                },
+            }),
         },
         actions = {{
             type = "Action.Submit",
