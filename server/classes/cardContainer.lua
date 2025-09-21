@@ -23,27 +23,17 @@ CardContainer.__index = CardContainer
 ---@field style? 'default' | 'emphasis' | 'accent' | 'good' | 'attention' | 'warning'
 ---@field bleed? boolean 
 ---@field separator? boolean
----@field height 'automatic' | 'strech'
+---@field height? 'automatic' | 'strech'
 ---@field minHeight? number in pixels
 ---@field alignement? ContainerAlignement
 ---@field background? ContainerBackground
 
 ---Create a container
----@param data ContainerOptions
+---@param data ContainerOptions | nil
 ---@param ...? CardElement a tuple of elements
 function CardContainer:new(data, ...)
-    local items = {}
 
-    local elements = { ... }
-    for i = 1, #elements, 1 do
-        local element = elements[i]
-
-        if type(element.type) ~= 'string' then
-            warn('An invalid object was passed to CardContainer constructor', json.encode(element))
-        else
-            table.insert(items, elements[i])
-        end
-    end
+    if not data then data = {} end
 
     local backgroundImage = nil
     if type(data.background) == 'table' then
@@ -56,6 +46,18 @@ function CardContainer:new(data, ...)
                 horizontalAlignment = data.background.horizontal or nil,
                 verticalAlignment = data.background.vertical or nil,
             }
+        end
+    end
+
+    local items = {}
+    local elements = { ... }
+    for i = 1, #elements, 1 do
+        local element = elements[i]
+
+        if type(element.type) ~= 'string' then
+            warn('An invalid object was passed to CardContainer constructor', json.encode(element))
+        else
+            table.insert(items, elements[i])
         end
     end
 
