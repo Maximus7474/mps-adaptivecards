@@ -58,7 +58,7 @@ jobs:
         with:
           repo_token: '${{ secrets.GITHUB_TOKEN }}'
           title: '${{ steps.get_vars.outputs.VERSION }}'
-          prerelease: true
+          prerelease: false
           files: |
             ${{ github.event.repository.name }}.zip
             adaptiveCardLib.zip
