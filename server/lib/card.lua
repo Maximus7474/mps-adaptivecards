@@ -34,7 +34,7 @@ function Card:addElement(...)
         local element = elements[i]
 
         if type(element.type) ~= 'string' then
-            warn('An invalid object was passed to CardContainer constructor', json.encode(element))
+            warn('An invalid object was passed to Card:addElement', json.encode(element))
         else
             table.insert(self.cardData.body, element)
         end
