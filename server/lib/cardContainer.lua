@@ -3,6 +3,7 @@ CardContainer.__index = CardContainer
 
 ---@class CardContainer
 ---@field elements table
+---@field getComponent fun(): table
 
 ---@class CardElement: table<string, boolean | string | number>
 ---@field type string
