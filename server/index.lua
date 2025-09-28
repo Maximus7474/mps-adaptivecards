@@ -1,6 +1,7 @@
 local Card = require 'server.lib.card'
 local CardElement = require 'server.lib.cardElement'
 local CardContainer = require 'server.lib.cardContainer'
+local CardAction = require 'server.lib.cardActions'
 local CardColumnClasses = require 'server.lib.cardColumnSet'
 local CardColumnSet, CardColumn = CardColumnClasses.CardColumnSet, CardColumnClasses.CardColumn
 
@@ -14,19 +15,14 @@ local function playerConnectingHandler(name, setKickReason, deferrals)
 
     Wait(100)
 
-    local card = Card:new({
-        actions = {{
-            type = "Action.Submit",
-            title = 'This is a title',
-            data = { 'this is data '}
-        }}
-    })
+    local card = Card:new()
 
-    local columnSet = CardColumnSet:new({
-        alignement = {
-            horizontal = "Left"
-        }
-    },
+    local columnSet = CardColumnSet:new(
+        {
+            alignement = {
+                horizontal = "Left"
+            }
+        },
         CardColumn:new({},
             CardElement.Image({
                 url = 'https://placehold.co/69',
@@ -35,7 +31,7 @@ local function playerConnectingHandler(name, setKickReason, deferrals)
             })
         ),
         CardColumn:new({},
-            CardElement.TextBlock( {
+            CardElement.TextBlock({
                 text = ('Hello, %s (%d)!'):format(name, tonumber(src)),
                 style = 'heading',
             })
@@ -63,8 +59,23 @@ local function playerConnectingHandler(name, setKickReason, deferrals)
         })
     )
 
+    local action = CardAction:new({
+        id = 'submitbutton',
+        title = 'Submit Button',
+        type = 'submit'
+    }, {
+        key1 = 'arg1',
+        key2 = 'arg2',
+    })
+
+    card:addAction(
+        action:getComponent()
+    )
+
     deferrals.presentCard(card:toJson(), function (data, rawData)
-        print('adaptive card actions cb', json.encode(data, {indent=true}))
+        print('adaptive card actions cb data', json.encode(data, {indent=true}))
+        print('----')
+        print('adaptive card actions cb rawData', json.encode(rawData, {indent=true}))
     end)
 end
 
