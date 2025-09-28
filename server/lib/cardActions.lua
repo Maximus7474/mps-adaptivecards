@@ -19,8 +19,9 @@ CardAction.__index = CardAction
 
 ---Create a new action component
 ---@param data CardActionOptions
+---@param args? table<string, any>
 ---@param cb? fun(relatedData: any, completeData: table): nil not yet implemented
-function CardAction:new(data, cb)
+function CardAction:new(data, args, cb)
     if type(data) ~= 'table' then
         error('No data was provided to "CardAction:new"', 2)
     end
@@ -58,6 +59,8 @@ function CardAction:new(data, cb)
         mode = data.mode,
         iconUrl = data.iconUrl,
         style = data.style,
+
+        data = args,
     }
 
     local actionInstanceData = {
