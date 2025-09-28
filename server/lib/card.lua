@@ -41,6 +41,21 @@ function Card:addElement(...)
     end
 end
 
+---Add action sets to the adapative card
+---@param ... table, a tuple of actions
+function Card:addAction(...)
+    local elements = { ... }
+    for i = 1, #elements, 1 do
+        local element = elements[i]
+
+        if type(element.type) ~= 'string' then
+            warn('An invalid object was passed to Card:addAction', json.encode(element))
+        else
+            table.insert(self.cardData.actions, element)
+        end
+    end
+end
+
 ---convert card to json string
 ---@param debug? boolean
 ---@return string
