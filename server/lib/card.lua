@@ -10,6 +10,8 @@ Card.__index = Card
 ---@field actions? table[] 
 
 function Card:new(data)
+    if not data then data = {} end
+
     local cardData = {
         type = 'AdaptiveCard',
         version = data.version or '1.4',
