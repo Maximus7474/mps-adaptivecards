@@ -113,6 +113,20 @@ function CardColumnSet:new(data, ...)
     return columnSetInstance
 end
 
+---add a new column to the set
+---@param ... table
+function CardColumnSet:addColumn(...)
+    local items = { ... }
+    for i = 1, #items, 1 do
+        local element = items[i]
+        if type(element) ~= 'table' or type(element.type) ~= 'string' then
+            warn('An invalid object was passed to "CardColumnSet:addColumn"', json.encode(element))
+        else
+            table.insert(self.columnSetData.columns, element)
+        end
+    end
+end
+
 function CardColumnSet:getComponent()
     return self.columnSetData
 end
