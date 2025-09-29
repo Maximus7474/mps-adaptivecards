@@ -15,17 +15,6 @@ CardInput.__index = CardInput
 ---@field isRequired? boolean
 ---@field errorMessage? string
 
----@class TextBlockElement
----@field text string
----@field size? 'Small' | 'Default' | 'Medium' | 'Large' | 'ExtraLarge'
----@field weight? 'Lighter' | 'Default' | 'Bolder'
----@field color? 'Default' | 'Dark' | 'Light' | 'Accent' | 'Good' | 'Warning' | 'Attention'
----@field isSubtle? boolean
----@field wrap? boolean
----@field maxLines? number
----@field horizontalAlignment? 'Left' | 'Center' | 'Right'
----@field regex? string
-
 ---@class InputTextElement: InputCommonOptions
 ---@field isMultiline? boolean
 ---@field maxLength? number
