@@ -34,11 +34,11 @@ function CardAction:new(data, args, cb)
         error(('An invalid type was passed to "CardAction:new" (received: %s)'):format(data.type), 2)
     end
 
-    local type
+    local actionType
     if data.type == 'url' then
-        type = 'Action.OpenUrl'
+        actionType = 'Action.OpenUrl'
     elseif data.type == 'submit' then
-        type = 'Action.Submit'
+        actionType = 'Action.Submit'
     end
 
     local url = nil
@@ -51,7 +51,7 @@ function CardAction:new(data, args, cb)
     end
 
     local actionData = {
-        type = type,
+        type = actionType,
 
         title = data.title,
         url = url,
