@@ -49,7 +49,7 @@ function CardColumn:addElement(...)
     for i = 1, #items, 1 do
         local element = items[i]
         if type(element) ~= 'table' or type(element.type) ~= 'string' then
-            warn('An invalid object was passed to CardColumn constructor', json.encode(element))
+            warn('An invalid object was passed to "CardColumn:addElement"', json.encode(element))
         else
             table.insert(self.columnData.items, element)
         end
