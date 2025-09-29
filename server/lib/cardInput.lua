@@ -84,8 +84,20 @@ function CardInput:new(cardType, data)
 
     for key, value in pairs(data) do
         if value ~= nil then
+
+            if key == 'choices' and (type(value) ~= 'table' or #value < 1) then
+                warn('An invalid value was passed to key: "choices" for CardInput:new, it has to be a table with more then 0 values. Skipping...')
+                goto skip
+            end
+
             cardElementData[key] = value
         end
+
+        ::skip::
+    end
+
+    if cardElementData.isRequired and not cardElementData.errorMessage then
+        error('CardInput:new has "isRequired" set to true, but no "errorMessage" defined.', 2)
     end
 
     local cardInputInstance = {
