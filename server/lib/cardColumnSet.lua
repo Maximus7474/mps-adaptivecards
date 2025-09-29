@@ -2,6 +2,7 @@ local CardElement = require 'server.lib.cardElement'
 local CardInput = require 'server.lib.cardInput'
 
 ---@class CardColumn: CardContainer
+---@field columnData table
 local CardColumn = {}
 CardColumn.__index = CardColumn
 
