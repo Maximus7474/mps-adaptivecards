@@ -2,6 +2,7 @@ local Card = require 'server.lib.card'
 local CardElement = require 'server.lib.cardElement'
 local CardContainer = require 'server.lib.cardContainer'
 local CardAction = require 'server.lib.cardActions'
+local CardInput = require 'server.lib.cardInput'
 local CardColumnClasses = require 'server.lib.cardColumnSet'
 local CardColumnSet, CardColumn = CardColumnClasses.CardColumnSet, CardColumnClasses.CardColumn
 
@@ -48,8 +49,15 @@ local function playerConnectingHandler(name, setKickReason, deferrals)
         columnSet:getComponent()
     )
 
+    local textInput = CardInput:new('text', {
+        id = 'text_input',
+        label = 'Provide a nice label',
+        placeholder = 'This is dum',
+    })
+
     card:addElement(
         container:getComponent(),
+        textInput:getComponent(),
         CardElement.Media({
             poster = 'https://placehold.co/69',
             sources = {
@@ -59,17 +67,22 @@ local function playerConnectingHandler(name, setKickReason, deferrals)
         })
     )
 
+    local openUrl = CardAction:new({
+        id = 'open_url',
+        title = 'Open rules',
+        type = 'url',
+        url = 'https://github.com/Maximus7474/mps-adaptivecards'
+    })
+
     local action = CardAction:new({
         id = 'submitbutton',
         title = 'Submit Button',
         type = 'submit'
-    }, {
-        key1 = 'arg1',
-        key2 = 'arg2',
     })
 
     card:addAction(
-        action:getComponent()
+        action:getComponent(),
+        openUrl:getComponent()
     )
 
     deferrals.presentCard(card:toJson(), function (data, rawData)
