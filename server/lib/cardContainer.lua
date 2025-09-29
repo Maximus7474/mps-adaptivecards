@@ -1,3 +1,7 @@
+local CardElement = require 'server.lib.cardElement'
+local CardInput = require 'server.lib.cardInput'
+local CardColumnSet = (require 'server.lib.cardColumnSet').CardColumnSet
+
 local CardContainer = {}
 CardContainer.__index = CardContainer
 
@@ -29,9 +33,13 @@ CardContainer.__index = CardContainer
 ---@field alignement? ContainerAlignement
 ---@field background? ContainerBackground
 
+local validContainerElements = {
+    CardElement, CardColumnSet, CardInput
+}
+
 ---Create a container
 ---@param data ContainerOptions | nil
----@param ...? CardElement a tuple of elements
+---@param ...? CardElement | CardColumnSet | CardInput a tuple of elements
 function CardContainer:new(data, ...)
 
     if not data then data = {} end
@@ -55,11 +63,20 @@ function CardContainer:new(data, ...)
     for i = 1, #elements, 1 do
         local element = elements[i]
 
-        if type(element.type) ~= 'string' then
-            warn('An invalid object was passed to CardContainer constructor', json.encode(element))
-        else
-            table.insert(items, elements[i])
+        local metatable = getmetatable(element)
+        for idx = 1, #validContainerElements do
+            local metatableElement = validContainerElements[idx]
+
+            if metatable == metatableElement then
+                goto valid
+            end
         end
+
+        error('Invalid element passed through "Card:addElement", it has to be on of: CardElement, CardColumnSet, CardInput, CardContainer', 2)
+
+        ::valid::
+
+        table.insert(items, element:getComponent())
     end
 
     local containerData = {
@@ -91,17 +108,28 @@ function CardContainer:new(data, ...)
 end
 
 ---Add elements to a container
----@param ... CardElement a tuple of elements
+---@param ... CardElement | CardColumnSet | CardInput a tuple of elements
 function CardContainer:addElement(...)
     local elements = { ... }
     for i = 1, #elements, 1 do
         local element = elements[i]
 
-        if type(element.type) ~= 'string' then
-            warn('An invalid object was passed to CardContainer constructor', json.encode(element))
-        else
-            table.insert(self.containerData.items, element)
+        local element = elements[i]
+
+        local metatable = getmetatable(element)
+        for idx = 1, #validContainerElements do
+            local metatableElement = validContainerElements[idx]
+
+            if metatable == metatableElement then
+                goto valid
+            end
         end
+
+        error('Invalid element passed through "Card:addElement", it has to be on of: CardElement, CardColumnSet, CardInput, CardContainer', 2)
+
+        ::valid::
+
+        table.insert(self.containerData.items, element:getComponent())
     end
 end
 
