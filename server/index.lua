@@ -18,46 +18,40 @@ local function playerConnectingHandler(name, setKickReason, deferrals)
 
     local card = Card:new()
 
-    local columnSet = CardColumnSet:new(
-        {
-            alignement = {
-                horizontal = "Left"
-            }
-        },
-        CardColumn:new({},
-            CardElement.Image({
-                url = 'https://placehold.co/69',
-                alignment = 'Center',
-                size = 'medium',
-            })
-        ),
-        CardColumn:new({},
-            CardElement.TextBlock({
-                text = ('Hello, %s (%d)!'):format(name, tonumber(src)),
-                style = 'heading',
-            })
-        )
-    )
-
-    local container = CardContainer:new({
-        alignement = {
-            horizontal = 'Center',
-            vertical = 'Center'
-        },
-        spacing = 'Large',
-    },
-        columnSet:getComponent()
-    )
-
-    local textInput = CardInput:new('text', {
-        id = 'text_input',
-        label = 'Provide a nice label',
-        placeholder = 'This is dum',
-    })
-
     card:addElement(
-        container:getComponent(),
-        textInput:getComponent(),
+        CardContainer:new({
+            alignement = {
+                horizontal = 'Center',
+                vertical = 'Center'
+            },
+            spacing = 'Large',
+        },
+            CardColumnSet:new(
+                {
+                    alignement = {
+                        horizontal = "Left"
+                    }
+                },
+                CardColumn:new({},
+                    CardElement.Image({
+                        url = 'https://placehold.co/69',
+                        alignment = 'Center',
+                        size = 'medium',
+                    })
+                ),
+                CardColumn:new({},
+                    CardElement.TextBlock({
+                        text = ('Hello, %s (%d)!'):format(name, tonumber(src)),
+                        style = 'heading',
+                    })
+                )
+            )
+        ),
+        CardInput:new('text', {
+            id = 'text_input',
+            label = 'Provide a nice label',
+            placeholder = 'This is dum',
+        }),
         CardElement.Media({
             poster = 'https://placehold.co/69',
             sources = {
@@ -67,22 +61,18 @@ local function playerConnectingHandler(name, setKickReason, deferrals)
         })
     )
 
-    local openUrl = CardAction:new({
-        id = 'open_url',
-        title = 'Open rules',
-        type = 'url',
-        url = 'https://github.com/Maximus7474/mps-adaptivecards'
-    })
-
-    local action = CardAction:new({
-        id = 'submitbutton',
-        title = 'Submit Button',
-        type = 'submit'
-    })
-
     card:addAction(
-        action:getComponent(),
-        openUrl:getComponent()
+        CardAction:new({
+            id = 'open_url',
+            title = 'Open rules',
+            type = 'url',
+            url = 'https://github.com/Maximus7474/mps-adaptivecards'
+        }),
+        CardAction:new({
+            id = 'submitbutton',
+            title = 'Submit Button',
+            type = 'submit'
+        })
     )
 
     deferrals.presentCard(card:toJson(), function (data, rawData)
