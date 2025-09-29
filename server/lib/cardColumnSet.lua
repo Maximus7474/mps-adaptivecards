@@ -42,6 +42,20 @@ function CardColumn:new(data, ...)
     return columnInstance
 end
 
+---add a new element to the column
+---@param ... table
+function CardColumn:addElement(...)
+    local items = { ... }
+    for i = 1, #items, 1 do
+        local element = items[i]
+        if type(element) ~= 'table' or type(element.type) ~= 'string' then
+            warn('An invalid object was passed to CardColumn constructor', json.encode(element))
+        else
+            table.insert(self.columnData.items, element)
+        end
+    end
+end
+
 function CardColumn:getComponent()
     return self.columnData
 end
