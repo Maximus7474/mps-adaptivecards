@@ -1,23 +1,45 @@
+local CardElement = require 'server.lib.cardElement'
+local CardInput = require 'server.lib.cardInput'
+
+---@class CardColumn: CardContainer
 local CardColumn = {}
 CardColumn.__index = CardColumn
+
+---@class CardColumnSet: CardContainer
+---@field columnSetData table
+local CardColumnSet = {}
+CardColumnSet.__index = CardColumnSet
 
 ---@class ColumnOptions: ContainerOptions
 ---@field width? 'auto' | 'stretch' | number in pixels
 ---@field verticalContentAlignment? 'Top' | 'Center' | 'Bottom'
 ---@field items? table
 
----@class CardColumn: CardContainer
+local validColumnElements = {
+    CardElement, CardInput
+}
 
 function CardColumn:new(data, ...)
     if not data then data = {} end
 
-    local items = { ... }
-    for i = 1, #items, 1 do
-        local element = items[i]
-        if type(element) ~= 'table' or type(element.type) ~= 'string' then
-            warn('An invalid object was passed to CardColumn constructor', json.encode(element))
-            table.remove(items, i)
+    local items, elements = {}, { ... }
+    for i = 1, #elements, 1 do
+        local element = elements[i]
+
+        local metatable = getmetatable(element)
+        for idx = 1, #validColumnElements do
+            local metatableElement = validColumnElements[idx]
+
+            if metatable == metatableElement then
+                goto valid
+            end
         end
+
+        error('Invalid element passed through "CardColumn:new", it has to be on of: CardElement, CardInput, CardContainer', 2)
+
+        ::valid::
+
+        table.insert(items, element:getComponent())
     end
 
     local columnData = {
@@ -46,12 +68,6 @@ function CardColumn:getComponent()
     return self.columnData
 end
 
-
----@class CardColumnSet: CardContainer
----@field columnSetData table
-local CardColumnSet = {}
-CardColumnSet.__index = CardColumnSet
-
 ---@class ColumnSetOptions: ContainerOptions
 ---@field columns? CardColumn[]
 
@@ -61,12 +77,19 @@ CardColumnSet.__index = CardColumnSet
 function CardColumnSet:new(data, ...)
     if not data then data = {} end
 
-    local columns = { ... }
-    for i = 1, #columns, 1 do
-        if getmetatable(columns[i]) ~= CardColumn then
-            warn('An invalid object was passed to CardColumnSet constructor. Expected a CardColumn.', json.encode(columns[i]))
-            table.remove(columns, i)
+    local items, elements = {}, { ... }
+    for i = 1, #elements, 1 do
+        local element = elements[i]
+
+        if getmetatable(element) == CardColumn then
+            goto valid
         end
+
+        error('Invalid element passed through "CardColumnSet:new", it has to be CardColumn', 2)
+
+        ::valid::
+
+        table.insert(items, element:getComponent())
     end
 
     local columnSetData = {
@@ -82,13 +105,8 @@ function CardColumnSet:new(data, ...)
         horizontalAlignment = data.alignement?.horizontal or nil,
         verticalContentAlignment = data.alignement?.vertical or nil,
 
-        columns = {},
+        columns = items,
     }
-
-    for i = 1, #columns, 1 do
-        local column = columns[i]
-        table.insert(columnSetData.columns, column:getComponent())
-    end
 
     local columnSetInstance = {
         columnSetData = columnSetData
