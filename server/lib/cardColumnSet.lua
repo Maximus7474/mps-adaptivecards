@@ -65,6 +65,30 @@ function CardColumn:new(data, ...)
     return columnInstance
 end
 
+---add an element to the column
+---@param ... CardElement | CardInput
+function CardColumn:addElements(...)
+    local elements = { ... }
+    for i = 1, #elements, 1 do
+        local element = elements[i]
+
+        local metatable = getmetatable(element)
+        for idx = 1, #validColumnElements do
+            local metatableElement = validColumnElements[idx]
+
+            if metatable == metatableElement then
+                goto valid
+            end
+        end
+
+        error('Invalid element passed through "CardColumn:new", it has to be on of: CardElement, CardInput, CardContainer', 2)
+
+        ::valid::
+
+        table.insert(self.columnData.items, element:getComponent())
+    end
+end
+
 function CardColumn:getComponent()
     return self.columnData
 end
