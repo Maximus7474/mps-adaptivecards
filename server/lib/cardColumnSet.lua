@@ -20,6 +20,8 @@ local validColumnElements = {
     CardElement, CardInput
 }
 
+---create a new column
+---@param ... CardElement | CardInput
 function CardColumn:new(data, ...)
     if not data then data = {} end
 
