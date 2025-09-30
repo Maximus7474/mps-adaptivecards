@@ -144,6 +144,25 @@ function CardColumnSet:new(data, ...)
     return columnSetInstance
 end
 
+---add a column to the set 
+---@param ... CardColumn
+function CardColumnSet:addColumn(...)
+    local elements = { ... }
+    for i = 1, #elements, 1 do
+        local element = elements[i]
+
+        if getmetatable(element) == CardColumn then
+            goto valid
+        end
+
+        error('Invalid element passed through "CardColumnSet:new", it has to be CardColumn', 2)
+
+        ::valid::
+
+        table.insert(self.columnSetData.items, element:getComponent())
+    end
+end
+
 function CardColumnSet:getComponent()
     return self.columnSetData
 end
