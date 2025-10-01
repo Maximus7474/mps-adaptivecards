@@ -84,7 +84,7 @@ function CardContainer:new(data, ...)
     setmetatable(containerInstance, self)
 
     if #{ ... } > 0 then
-        self:addElement(...)
+        containerInstance:addElement(...)
     end
 
     return containerInstance
