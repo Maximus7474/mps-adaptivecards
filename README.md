@@ -2,7 +2,19 @@
 
 A Lua module for FiveM that simplifies the creation and management of **Adaptive Cards**, enabling rich, interactive UIs for players. This resource handles the complexities of the Adaptive Card JSON schema, allowing you to focus on building your user interface.
 
-<img src=".github/assets/demo.png" alt="Demo Image" width="600">
+## Demonstrations
+
+<details>
+  <summary>Generic Demo Card</summary>
+  <img src=".github/assets/demo.png" alt="Demo Image" width="600">
+</details>
+
+<details>
+  <summary>Basic Discord Whitelist</summary>
+  <img src=".github/assets/discord-wl-demo-1.png" alt="Demo Image" width="600">
+  <img src=".github/assets/discord-wl-demo-2.png" alt="Demo Image" width="600">
+  <img src=".github/assets/discord-wl-demo-3.png" alt="Demo Image" width="600">
+</details>
 
 -----
 
