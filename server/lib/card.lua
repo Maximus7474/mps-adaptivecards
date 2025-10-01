@@ -32,7 +32,7 @@ function Card:new(data, ...)
     setmetatable(cardInstance, self)
 
     if #{ ... } > 0 then
-        self:addElement(...)
+        cardInstance:addElement(...)
     end
 
     return cardInstance
