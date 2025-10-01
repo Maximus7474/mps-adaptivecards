@@ -1,3 +1,9 @@
+local CardElement = require 'server.lib.cardElement'
+local CardContainer = require 'server.lib.cardContainer'
+local CardAction = require 'server.lib.cardActions'
+local CardInput = require 'server.lib.cardInput'
+local CardColumnSet = (require 'server.lib.cardColumnSet').CardColumnSet
+
 local Card = {}
 Card.__index = Card
 
@@ -28,33 +34,46 @@ function Card:new(data)
     return cardInstance
 end
 
+local validCardBodyElements = {
+    CardElement, CardColumnSet, CardInput, CardContainer
+}
+
 ---Add elements to the adapative card
----@param ... CardElement a tuple of elements
+---@param ... CardElement | CardColumnSet | CardInput | CardContainer a tuple of elements
 function Card:addElement(...)
     local elements = { ... }
     for i = 1, #elements, 1 do
         local element = elements[i]
 
-        if type(element.type) ~= 'string' then
-            warn('An invalid object was passed to Card:addElement', json.encode(element))
-        else
-            table.insert(self.cardData.body, element)
+        local metatable = getmetatable(element)
+        for idx = 1, #validCardBodyElements do
+            local metatableElement = validCardBodyElements[idx]
+
+            if metatable == metatableElement then
+                goto valid
+            end
         end
+
+        error('Invalid element passed through "Card:addElement", it has to be on of: CardElement, CardColumnSet, CardInput, CardContainer', 2)
+
+        ::valid::
+
+        table.insert(self.cardData.body, element:getComponent())
     end
 end
 
 ---Add action sets to the adapative card
----@param ... table, a tuple of actions
+---@param ... CardAction, a tuple of actions
 function Card:addAction(...)
     local elements = { ... }
     for i = 1, #elements, 1 do
         local element = elements[i]
 
-        if type(element.type) ~= 'string' then
-            warn('An invalid object was passed to Card:addAction', json.encode(element))
-        else
-            table.insert(self.cardData.actions, element)
+        if getmetatable(element) ~= CardAction then
+            error('Invalid element passed through "Card:addAction", it has to be a CardAction', 2)
         end
+
+        table.insert(self.cardData.actions, element:getComponent())
     end
 end
 
