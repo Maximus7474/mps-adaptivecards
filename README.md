@@ -1,5 +1,13 @@
 # FiveM Adaptive Cards
 
+<!-- 
+
+If using the adaptiveCardLib, outside of the demo resource. You are required to follow the license of the code (LICENSE file) and keep it linked within the folder along with this README and link towards the original github repository.
+
+> https://github.com/Maximus7474/mps-adaptivecards
+
+ -->
+
 A Lua module for FiveM that simplifies the creation and management of **Adaptive Cards**, enabling rich, interactive UIs for players. This resource handles the complexities of the Adaptive Card JSON schema, allowing you to focus on building your user interface.
 
 ## Demonstrations
