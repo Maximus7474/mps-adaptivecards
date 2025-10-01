@@ -50,6 +50,9 @@ jobs:
           -x "./.github/*" \
              "./.*"
 
+          cp LICENSE server/lib/
+          cp README.md server/lib/
+
           zip -r adaptiveCardLib.zip server/lib/
 
       - name: Create Release
