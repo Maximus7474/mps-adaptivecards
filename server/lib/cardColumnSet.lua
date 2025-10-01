@@ -45,7 +45,7 @@ function CardColumn:new(data, ...)
     setmetatable(columnInstance, self)
 
     if #{ ... } > 0 then
-        self:addElements(...)
+        columnInstance:addElements(...)
     end
 
     return columnInstance
@@ -111,7 +111,7 @@ function CardColumnSet:new(data, ...)
     setmetatable(columnSetInstance, self)
 
     if #{ ... } > 0 then
-        self:addColumn(...)
+        columnSetInstance:addColumn(...)
     end
 
     return columnSetInstance
@@ -132,7 +132,7 @@ function CardColumnSet:addColumn(...)
 
         ::valid::
 
-        table.insert(self.columnSetData.items, element:getComponent())
+        table.insert(self.columnSetData.columns, element:getComponent())
     end
 end
 
