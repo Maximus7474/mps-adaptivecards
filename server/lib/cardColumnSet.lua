@@ -45,7 +45,7 @@ function CardColumn:new(data, ...)
     setmetatable(columnInstance, self)
 
     if #{ ... } > 0 then
-        self.addElements(...)
+        self:addElements(...)
     end
 
     return columnInstance
