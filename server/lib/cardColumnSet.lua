@@ -167,7 +167,6 @@ function CardColumnSet:getComponent()
     return self.columnSetData
 end
 
--- Return the new standalone components
 return {
     CardColumnSet = CardColumnSet,
     CardColumn = CardColumn
