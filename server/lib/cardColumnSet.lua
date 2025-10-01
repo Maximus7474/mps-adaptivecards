@@ -25,26 +25,6 @@ local validColumnElements = {
 function CardColumn:new(data, ...)
     if not data then data = {} end
 
-    local items, elements = {}, { ... }
-    for i = 1, #elements, 1 do
-        local element = elements[i]
-
-        local metatable = getmetatable(element)
-        for idx = 1, #validColumnElements do
-            local metatableElement = validColumnElements[idx]
-
-            if metatable == metatableElement then
-                goto valid
-            end
-        end
-
-        error('Invalid element passed through "CardColumn:new", it has to be on of: CardElement, CardInput, CardContainer', 2)
-
-        ::valid::
-
-        table.insert(items, element:getComponent())
-    end
-
     local columnData = {
         type = 'Column',
         width = data.width or 'auto',
@@ -55,7 +35,7 @@ function CardColumn:new(data, ...)
         separator = data.separator or nil,
         height = data.height or nil,
         minHeight = data.minHeight or nil,
-        items = items,
+        items = {},
     }
 
     local columnInstance = {
@@ -63,6 +43,10 @@ function CardColumn:new(data, ...)
     }
 
     setmetatable(columnInstance, self)
+
+    if #{ ... } > 0 then
+        self.addElements(...)
+    end
 
     return columnInstance
 end
@@ -104,21 +88,6 @@ end
 function CardColumnSet:new(data, ...)
     if not data then data = {} end
 
-    local items, elements = {}, { ... }
-    for i = 1, #elements, 1 do
-        local element = elements[i]
-
-        if getmetatable(element) == CardColumn then
-            goto valid
-        end
-
-        error('Invalid element passed through "CardColumnSet:new", it has to be CardColumn', 2)
-
-        ::valid::
-
-        table.insert(items, element:getComponent())
-    end
-
     local columnSetData = {
         type = 'ColumnSet',
 
@@ -132,7 +101,7 @@ function CardColumnSet:new(data, ...)
         horizontalAlignment = data.alignement?.horizontal or nil,
         verticalContentAlignment = data.alignement?.vertical or nil,
 
-        columns = items,
+        columns = {},
     }
 
     local columnSetInstance = {
@@ -140,6 +109,10 @@ function CardColumnSet:new(data, ...)
     }
 
     setmetatable(columnSetInstance, self)
+
+    if #{ ... } > 0 then
+        self:addColumn(...)
+    end
 
     return columnSetInstance
 end
