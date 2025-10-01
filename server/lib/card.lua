@@ -15,7 +15,7 @@ Card.__index = Card
 ---@field body? table[]
 ---@field actions? table[] 
 
-function Card:new(data)
+function Card:new(data, ...)
     if not data then data = {} end
 
     local cardData = {
@@ -30,6 +30,8 @@ function Card:new(data)
     }
 
     setmetatable(cardInstance, self)
+
+    self:addElement(...)
 
     return cardInstance
 end
