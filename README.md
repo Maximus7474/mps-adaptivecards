@@ -37,14 +37,15 @@ A Lua module for FiveM that simplifies the creation and management of **Adaptive
 
 ## 📦 How to Use
 
-1.  **Add the Files**: Place `card.lua`, `cardContainer.lua`, and `cardElement.lua` into your FiveM resource's `server` folder.
+1.  **Download the librairie**: Go to the latest release, download the `lib` archive and place it in your resource.
 
 2.  **Require the Modules**: In your server-side script, import the modules.
 
     ```lua
-    local Card = require 'server.classes.card'
-    local CardElement = require 'server.classes.cardElement'
-    local CardContainer = require 'server.classes.cardContainer'
+    -- These are example paths, it can be different on your server so pay attention
+    local Card = require 'server.lib.card'
+    local CardElement = require 'server.lib.cardElement'
+    local CardContainer = require 'server.lib.cardContainer'
     ```
 
 3.  **Create and Present a Card**: Use the provided classes to construct your card and pass the final JSON string to `deferrals.presentCard()`.
