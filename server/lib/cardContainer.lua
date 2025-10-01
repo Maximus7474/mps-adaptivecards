@@ -58,27 +58,6 @@ function CardContainer:new(data, ...)
         end
     end
 
-    local items = {}
-    local elements = { ... }
-    for i = 1, #elements, 1 do
-        local element = elements[i]
-
-        local metatable = getmetatable(element)
-        for idx = 1, #validContainerElements do
-            local metatableElement = validContainerElements[idx]
-
-            if metatable == metatableElement then
-                goto valid
-            end
-        end
-
-        error('Invalid element passed through "Card:addElement", it has to be on of: CardElement, CardColumnSet, CardInput, CardContainer', 2)
-
-        ::valid::
-
-        table.insert(items, element:getComponent())
-    end
-
     local containerData = {
         type = 'Container',
 
@@ -95,7 +74,7 @@ function CardContainer:new(data, ...)
 
         backgroundImage = backgroundImage,
 
-        items = items,
+        items = {},
     }
 
     local containerInstance = {
@@ -103,6 +82,10 @@ function CardContainer:new(data, ...)
     }
 
     setmetatable(containerInstance, self)
+
+    if #{ ... } > 0 then
+        self:addElement(...)
+    end
 
     return containerInstance
 end
