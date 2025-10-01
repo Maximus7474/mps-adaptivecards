@@ -54,7 +54,8 @@ jobs:
           cp LICENSE server/lib/
           cp README.md server/lib/
 
-          zip -r adaptiveCardLib.zip server/lib/
+          cd server/lib/
+          zip -r ../lib.zip .
 
       - name: Create Release
         uses: marvinpinto/action-automatic-releases@v1.2.1
@@ -65,4 +66,4 @@ jobs:
           prerelease: false
           files: |
             ${{ github.event.repository.name }}.zip
-            adaptiveCardLib.zip
+            server/lib.zip
