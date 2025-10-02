@@ -24,6 +24,12 @@ A Lua module for FiveM that simplifies the creation and management of **Adaptive
   <img src=".github/assets/discord-wl-demo-3.png" alt="Demo Image" width="600">
 </details>
 
+<details>
+  <summary>Basic Password Protection</summary>
+  <img src=".github/assets/password-demo-2.png" alt="Demo Image" width="600">
+  <img src=".github/assets/password-demo-1.png" alt="Demo Image" width="600">
+</details>
+
 -----
 
 ## 🚀 Features
